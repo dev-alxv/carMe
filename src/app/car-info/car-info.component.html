@@ -1,0 +1,53 @@
+
+<div class="topper" #topper>
+  <h1>
+    {{ title }}
+  </h1>
+  <button mat-raised-button routerLink="/">Back to Showroom</button>
+</div>
+<section class="create-car">
+  <h2 #carformh2>{{formTitle}}<br>[id: {{id}}] {{brand}} {{model}}</h2>
+  <form class="car-form" #carForm="ngForm" (ngSubmit)="submitCar(carForm)" novalidate>
+    <mat-form-field rel="hidden-obj">
+        <input matInput type="number" value={{id}} [ngModel]="id" name="id" hidden>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Brand" [ngModel]="brand" name="brand" value={{brand}} type="text" required>
+      <mat-error *ngIf="brandF.invalid">{{brandError}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Model" [ngModel]="model" name="model" value={{model}} type="text" required>
+      <mat-error *ngIf="modelF.invalid">{{modelError}}</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <textarea matInput placeholder="Description" [ngModel]="description" name="description" value={{description}} type="text"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Reg.Number" [ngModel]="registrationNumber" name="registrationNumber" value={{registrationNumber}} type="text" required>
+      <mat-error *ngIf="regNumberF.invalid">{{regNumberError}}</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-select placeholder="Fuel" [ngModel]="fuelType" name="fuelType" type="select" required>
+        <mat-option value={{fuelType}} *ngFor="let fuelType of fuelTypes">{{ fuelType }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="fuelF.invalid">{{fuelError}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Transmission" [ngModel]="transmission" name="transmission" type="select" required>
+        <mat-option value={{transmission}} *ngFor="let transmission of transmissions">{{ transmission }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="transmissionF.invalid">{{transmissionError}}</mat-error>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">{{ formButt }}</button>
+    <p style="text-align: center; color: red; padding-top:10px;" *ngIf="carForm.invalid"><strong>Please provide all the mandatory information</strong></p>
+  </form>
+  <div #overlaysubmited class="overlay-submited">
+    <mat-spinner></mat-spinner>
+  </div>
+</section>

@@ -1,0 +1,46 @@
+
+<div class="topper">
+  <h1>
+    {{ title }}
+  </h1>
+  <button mat-raised-button (click)="confirmRemoveAllCars()" *ngIf="carService.getLocalCars().length > 0" rel="rem-all-cars">Remove all cars</button>
+  <button mat-raised-button routerLink="/add-car" rel="add-car" [ngStyle]="carService.getLocalCars().length === 0 && {'margin-left': 'auto'}">Create a new car</button>  
+</div>
+
+<section class="card-container">
+  <div *ngIf="carService.getLocalCars().length === 0"><h2>There's no available cars to show</h2></div>
+
+  <div class="pagination" *ngIf="this.carService.getLocalCars().length > 10">
+    <div class="inner">
+      <button mat-button color="primary" [disabled]="curPage == 1" (click)="curPage = curPage - 1">
+        <i class="material-icons">navigate_before</i>
+      </button>
+      <span>&nbsp;{{curPage}} / {{numberOfPages()}}&nbsp;</span>
+      <button mat-button color="primary" [disabled]="curPage >= this.carService.getLocalCars().length/pageSize" (click)="curPage = curPage + 1">
+        <i class="material-icons">navigate_next</i>
+      </button>
+    </div>
+  </div>
+
+  <mat-card class="example-card car-card" *ngFor="let car of carService.getLocalCars() | slice: (curPage * pageSize) - pageSize :curPage * pageSize">
+    <div class="inner">
+      <mat-card-header>
+        <mat-card-title>{{ car.brand }}</mat-card-title>
+        <mat-card-subtitle>{{ car.model }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="assets/imgs/genericCar.jpg" alt="Car">
+      <mat-card-content>
+        <p><strong>Info:</strong></p>
+        <p>{{ car.description }}</p>
+        <p><strong>Reg.Number:</strong> <span>{{ car.registrationNumber }}</span></p>
+        <p><strong>Fuel:</strong> <span>{{ car.fuelTypes }}</span></p>
+        <p><strong>Transmission:</strong> <span>{{ car.transmission }}</span></p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="this.carInfo.editThisCar(car.id)">Edit</button>
+        <button mat-button color="primary" (click)="confirmRemoveCar(car.id)">Remove</button>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+
+</section>

@@ -4,11 +4,12 @@
     {{ title }}
   </h1>
   <button mat-raised-button (click)="confirmRemoveAllCars()" *ngIf="carService.getLocalCars().length > 0" rel="rem-all-cars">Remove all cars</button>
-  <button mat-raised-button routerLink="/add-car" rel="add-car" [ngStyle]="carService.getLocalCars().length === 0 && {'margin-left': 'auto'}">Create a new car</button>  
+  <button mat-raised-button routerLink="/add-car" rel="add-car" *ngIf="carService.getLocalCars().length > 0" [ngStyle]="carService.getLocalCars().length === 0 && {'margin-left': 'auto'}">Create a new car</button>  
 </div>
 
 <section class="card-container">
-  <div *ngIf="carService.getLocalCars().length === 0"><h2>There's no available cars to show</h2></div>
+  <div style="width:100%; text-align:center;" *ngIf="carService.getLocalCars().length === 0"><h2>There's no available cars to show</h2></div>
+  <button mat-raised-button routerLink="/add-car" rel="add-car" *ngIf="carService.getLocalCars().length === 0">Create a new car</button>    
 
   <div class="pagination" *ngIf="this.carService.getLocalCars().length > 10">
     <div class="inner">
